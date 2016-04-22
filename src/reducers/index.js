@@ -4,6 +4,10 @@ module.exports = function(state, action) {
             return Object.assign({}, state, {
                 conferences: action.conferences
             });
+        case 'SELECT_CONFERENCE':
+            return Object.assign({}, state, {
+               selectedConferenceId: action.conferenceId 
+            });
         default:
             return state;
     }

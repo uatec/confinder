@@ -10,6 +10,7 @@
     "history": "^1.17.0",
     "json-loader": "^0.5.4",
     "jsx-loader": "^0.13.2",
+    "lodash": "^4.11.1",
     "material-ui": "^0.14.2",
     "qwest": "^3.0.0",
     "react": "^0.14.6",

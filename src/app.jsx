@@ -25,7 +25,8 @@ store.dispatch(actions.receiveConferences([
 			location: {
 				lat: 51.512761,
 				lng: -0.099792
-			}
+			},
+      url: 'http://www.devopsdays.org/events/2016-london/'
 		},
 		{
 			id: '1', 
@@ -33,7 +34,8 @@ store.dispatch(actions.receiveConferences([
 			location: {
 				lat: 51.518366,
 				lng:  -0.086191
-			}
+			},
+      url: 'https://kubecon.io/'
 		}
 ]));
 

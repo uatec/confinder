@@ -5,6 +5,13 @@ module.exports = {
             type: this.RECEIVE_CONFERENCES,
             conferences: conferences
         };
+    },
+    SELECT_CONFERENCE: 'SELECT_CONFERENCE',
+    selectConference: function(conferenceId) {
+        return {
+            type: this.SELECT_CONFERENCE,
+            conferenceId: conferenceId
+        };
     }
 };
 /* 
