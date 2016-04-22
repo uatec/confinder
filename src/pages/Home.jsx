@@ -1,16 +1,20 @@
 var React = require('react');
 var GoogleMap = require('google-map-react'),
-    MapMarker = require('../components/MapMarker.jsx');
-
+    MapMarker = require('../components/MapMarker.jsx'),
+    connect = require('react-redux').connect;
+    
+var mapStateToProps = function(state) {
+    return {
+        conferences: state.conferences
+    }; 
+};
 
 var Home = React.createClass({
   render: function() {
-      
-      var markers = [
-          <MapMarker lat={51.5} lng={0} />,
-          <MapMarker lat={51.5} lng={0.1} />,
-          <MapMarker lat={51.5} lng={0.2} />
-      ];
+      console.log(this);
+      var markers = this.props.conferences.map(function(conference) {
+          return <MapMarker key={conference.id} lat={conference.location.lat} lng={conference.location.lng} />;
+      });
       
     var center =  {lat:51.4826, lng: 0.0077};
     var zoom =  9;
@@ -31,4 +35,6 @@ var Home = React.createClass({
   }
 });
 
-module.exports = Home;
+module.exports = connect(
+    mapStateToProps
+)(Home);

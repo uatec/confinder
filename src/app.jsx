@@ -1,18 +1,45 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Fluxxor = require('fluxxor');
-var ReactRouter = require('react-router'),
-    Route = ReactRouter.Route,
-    Router = ReactRouter.Router,
-    browserHistory = ReactRouter.browserHistory;
+var Provider = require('react-redux').Provider;
+var createStore = require('redux').createStore;
+var reducers = require('./reducers');
 
 require('react-tap-event-plugin')();
 
 
 var Home = require('./pages/Home.jsx');
 
+var store = createStore(reducers);
+
+var actions = require('./actions');
+
+store.subscribe(function() {
+  console.log(store.getState());
+});
+
+store.dispatch(actions.receiveConferences([
+		{
+			id: '0', 
+			name: 'DevOpsDays London 2016',
+			location: {
+				lat: 51.512761,
+				lng: -0.099792
+			}
+		},
+		{
+			id: '1', 
+			name: 'Kubecon 2016',
+			location: {
+				lat: 51.518366,
+				lng:  -0.086191
+			}
+		}
+]));
+
 ReactDOM.render(
-    <Home />,
+    <Provider store={store}>
+      <Home />
+    </Provider>,
     document.getElementById("content")
 );
