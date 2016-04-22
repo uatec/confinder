@@ -1,0 +1,29 @@
+{
+  "name": "confinder",
+  "version": "1.0.0",
+  "dependencies": {
+    "auth0-lock": "^8.2.1",
+    "express": "^4.13.4",
+    "fluxxor": "^1.7.3",
+    "fs": "^0.0.2",
+    "history": "^1.17.0",
+    "material-ui": "^0.14.2",
+    "qwest": "^3.0.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-router": "^1.0.3",
+    "react-stripe-checkout": "^1.7.2",
+    "react-tap-event-plugin": "^0.2.1",
+    "json-loader": "^0.5.4",
+    "jsx-loader": "^0.13.2",
+    "style-loader": "^0.13.0",
+    "transform-loader": "^0.2.3",
+    "webpack": "^1.12.11"
+  },
+  "scripts": {
+    "start": "node node_modules/webpack/bin/webpack.js --debug --devtool inline-source-map && node server.js"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^1.14.1"
+  }
+}
