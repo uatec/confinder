@@ -14,9 +14,9 @@ var store = createStore(reducers);
 
 var actions = require('./actions');
 
-store.subscribe(function() {
-  console.log(store.getState());
-});
+// store.subscribe(function() {
+//   console.log(store.getState());
+// });
 
 store.dispatch(actions.receiveConferences([
 		{
@@ -39,9 +39,20 @@ store.dispatch(actions.receiveConferences([
 		}
 ]));
 
-ReactDOM.render(
-    <Provider store={store}>
-      <Home />
-    </Provider>,
-    document.getElementById("content")
-);
+module.exports =  React.createClass({
+	render: function() {
+	    console.log('rendering app');
+	return <html>
+			<head>
+			</head>
+			<body>
+				<div id='content'>
+					<Provider store={store}>
+						<Home />
+					</Provider>
+				</div>
+				<script src="bundle.js"></script>
+			</body>
+		</html>;
+	}
+});
