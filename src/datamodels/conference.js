@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ConferenceSchema   = new Schema({
+    id: String,
+    url: String,
     name: String,
     location: {
         type: {
