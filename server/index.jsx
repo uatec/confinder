@@ -26,7 +26,7 @@ app.get('/api/v1/conferences', function(req, res, next) {
   var query = Conference.find();
 
   query.exec(function (err, conference) {
-    console.log('\tquery returned: ' + arguments);
+    console.log('\tquery returned: ' + conference);
     if (err) {
       console.log(err);
       throw err;

@@ -4,7 +4,10 @@ var Schema = mongoose.Schema;
 var ConferenceSchema   = new Schema({
     name: String,
     location: {
-        type: [Number],
+        type: {
+            lat: String,
+            lng: String
+        },
         index: '2d'
     }
 });

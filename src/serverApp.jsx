@@ -2,7 +2,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Provider = require('react-redux').Provider;
-var createStore = require('redux').createStore;
+
+var Redux = require('redux'),
+    createStore = Redux.createStore,
+	applyMiddleware = Redux.applyMiddleware;
+	
 var reducers = require('./reducers');
 
 require('react-tap-event-plugin')();
@@ -10,34 +14,41 @@ require('react-tap-event-plugin')();
 
 var Home = require('./pages/Home.jsx');
 
-var store = createStore(reducers);
+var thunkMiddleware = require('redux-thunk').default;
 
+var store = createStore(reducers,
+    applyMiddleware(
+        thunkMiddleware
+    ));
+    
 var actions = require('./actions');
+
+store.dispatch(actions.fetchConferences());
 
 // store.subscribe(function() {
 //   console.log(store.getState());
 // });
 
-store.dispatch(actions.receiveConferences([
-		{
-			id: '0', 
-			name: 'DevOpsDays London 2016',
-			location: {
-				lat: 51.512761,
-				lng: -0.099792
-			},
-      url: 'http://www.devopsdays.org/events/2016-london/'
-		},
-		{
-			id: '1', 
-			name: 'Kubecon 2016',
-			location: {
-				lat: 51.518366,
-				lng:  -0.086191
-			},
-      url: 'https://kubecon.io/'
-		}
-]));
+// store.dispatch(actions.receiveConferences([
+// 		{
+// 			id: '0', 
+// 			name: 'DevOpsDays London 2016',
+// 			location: {
+// 				lat: 51.512761,
+// 				lng: -0.099792
+// 			},
+//       url: 'http://www.devopsdays.org/events/2016-london/'
+// 		},
+// 		{
+// 			id: '1', 
+// 			name: 'Kubecon 2016',
+// 			location: {
+// 				lat: 51.518366,
+// 				lng:  -0.086191
+// 			},
+//       url: 'https://kubecon.io/'
+// 		}
+// ]));
 
 module.exports =  React.createClass({
 	render: function() {
@@ -47,7 +58,7 @@ module.exports =  React.createClass({
 			</head>
 			<body>
 				<div id='content'>
-					<Provider store={store}>
+                    <Provider store={store}>
 						<Home />
 					</Provider>
 				</div>
