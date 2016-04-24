@@ -1,5 +1,16 @@
 var request = require('superagent');
 
+var urlPrefix = '/api/v1';
+
+var isNode = new Function("try {return this===global;}catch(e){return false;}");
+
+// tests if global scope is binded to "global"
+if(isNode())  { 
+    urlPrefix = 'http://localhost:' + (process.env.PORT || 3000) + '/api/v1';
+}
+
+var prefix = require('superagent-prefix')(urlPrefix);
+
 module.exports = {
     REQUEST_CONFERENCES: 'REQUEST_CONFERENCES',
     requestConferences: function() {
@@ -18,8 +29,10 @@ module.exports = {
     fetchConferences: function() {
         return function(dispatch) {
             dispatch(this.requestConferences());
-            request.get('http://localhost:3000/api/v1/conferences')
+            request.get('/conferences')
+                .use(prefix)
                 .end(function(err, response) {
+                    console.log(arguments);
                     if ( err ) { 
                         throw new Error(err);
                     }
