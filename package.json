@@ -32,7 +32,7 @@
   },
   "scripts": {
     "watch": "./node_modules/.bin/webpack --progress --colors --hot --debug --devtool inline-source-map --watch",
-    "prestart": "./node_modules/.bin/webpack --progress --colors --hot --debug --devtool inline-source-map",
+    "build": "./node_modules/.bin/webpack",
     "start": "./node_modules/.bin/babel-node server"
   }
 }
