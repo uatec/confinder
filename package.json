@@ -4,6 +4,7 @@
   "dependencies": {
     "auth0-lock": "^8.2.1",
     "express": "^4.13.4",
+    "file-loader": "^0.8.5",
     "fluxxor": "^1.7.3",
     "fs": "^0.0.2",
     "google-map-react": "^0.11.2",
@@ -22,6 +23,7 @@
     "react-tap-event-plugin": "^0.2.1",
     "redux": "^3.5.1",
     "redux-thunk": "^2.0.1",
+    "superagent": "^1.8.3",
     "style-loader": "^0.13.0",
     "transform-loader": "^0.2.3",
     "url-loader": "^0.5.7",
