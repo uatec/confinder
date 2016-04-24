@@ -13,7 +13,7 @@ app.get('/', function(request, response) {
 });
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test', function(err) {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', function(err) {
   console.log('Data connection established');
   if ( err ) {
     console.error(err);
