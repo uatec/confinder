@@ -8,7 +8,8 @@ var path = require('path');
 
 
 app.get('/', function(request, response) {
-  response.send(ReactDOMServer.renderToString(<App />));
+  var body = ReactDOMServer.renderToString(<App />);
+  response.send('<html><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
 });
 
 var mongoose = require('mongoose');
