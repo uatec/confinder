@@ -108,7 +108,6 @@ module.exports = [{
   context: CLIENT_DIR,
   entry: {
       app: '../src/Root.jsx'
-    // app: 'components/app/index.js'
   },
   output: {
     path: SERVER_DIR,
