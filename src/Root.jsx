@@ -15,22 +15,23 @@ var Home = require('./pages/Home.jsx');
 var reducers = require('./reducers');
 var actions = require('./actions');
 
+var isNode = require('./utils/isNode.js');
+
 module.exports = React.createClass({
 	componentWillMount: function() {
-		console.log('preparing stores for Root');
 		this.store = createStore(reducers,
 			applyMiddleware(
 				thunkMiddleware
 			));
 
 		this.store.dispatch(actions.fetchConferences());
+		
+		if ( !isNode() ) {
+			this.store.dispatch(actions.tryLogin());
+		}
 	},
 	
 	render: function() {
-		console.log('rendering...');
-		console.log('p ' + Provider);
-		console.log('h ' + Home);
-		
 		return <Provider store={this.store}>
 				<Home />
 			</Provider>;

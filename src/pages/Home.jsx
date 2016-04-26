@@ -9,7 +9,9 @@ var actions = require('../actions');
 var mapStateToProps = function(state) {
     return {
         conferences: state.conferences,
-        selectedConferenceId: state.selectedConferenceId
+        selectedConferenceId: state.selectedConferenceId,
+        isLoggedIn: !!state.profile,
+        profile: state.profile
     }; 
 };
 
@@ -20,6 +22,9 @@ var mapDispatchToProps = function(dispatch) {
       },
       fetchConferences: function() {
           dispatch(actions.fetchConferences());
+      },
+      beginLogin: function() {
+          dispatch(actions.beginLogin());
       }
   };  
 };
@@ -46,7 +51,13 @@ var Home = React.createClass({
                         <h1>Confinder</h1>
                         <h3>Find out what's going on near you.</h3>
                     </center>
-                
+                    {!this.props.isLoggedIn ?
+                    <button onClick={this.props.beginLogin}>
+                        Login
+                    </button> :
+                    <div>
+                        Hi {this.props.profile.nickname}!
+                    </div> }
                     <div style={{width: '100%', height: '20em'}} > 
                         <GoogleMap
                             onChildClick={this.props.selectConference}

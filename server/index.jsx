@@ -5,11 +5,14 @@ var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 var App = require('./generated/app');
 var path = require('path');
+var _ = require('lodash');
+
+var envVars = '<script>window.env=' + JSON.stringify(_.pick(process.env, ['auth0clientid', 'auth0domain'])) + '</script>';
 
 
 app.get('/', function(request, response) {
   var body = ReactDOMServer.renderToString(<App />);
-  response.send('<html><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
+  response.send('<html><head>' + envVars + '</head><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
 });
 
 var mongoose = require('mongoose');
