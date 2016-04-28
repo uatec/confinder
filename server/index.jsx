@@ -7,8 +7,18 @@ var App = require('./generated/app');
 var path = require('path');
 var _ = require('lodash');
 
-var envVars = '<script>window.env=' + JSON.stringify(_.pick(process.env, ['auth0clientid', 'auth0domain'])) + '</script>';
+var envVars = '<script>window.env=' + JSON.stringify(_.pick(process.env, [
+  'auth0clientid', 
+  'auth0domain', 
+  'enable_conference_submission'
+  ])) + '</script>';
 
+app.use(function(req, res, next) {
+    GLOBAL.navigator = {
+        userAgent: req.headers['user-agent']
+    };
+    next();
+});
 
 app.get('/', function(request, response) {
   var body = ReactDOMServer.renderToString(<App />);
@@ -26,21 +36,17 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', function
 var Conference = require('../src/datamodels/conference.js');
 
 app.get('/api/v1/conferences', function(req, res, next) { 
-  console.log('request for /api/v1/conferences');
   var query = Conference.find();
 
   query.exec(function (err, conference) {
-    console.log('\tquery returned: ' + conference);
     if (err) {
-      console.log(err);
+      console.error('error loading api', err);
       throw err;
     }
     
     res.json(conference);
-    console.log('\tresponse sent to client.');
     next();
   });
-  console.log('\tasync query initiated');
 });
 
 // Static assets

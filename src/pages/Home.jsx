@@ -3,9 +3,16 @@ var GoogleMap = require('google-map-react'),
     MapMarker = require('../components/MapMarker.jsx'),
     connect = require('react-redux').connect,
     _ = require('lodash');
-   
+
+var TextField = require('material-ui/lib/text-field');
+var Dialog = require('material-ui/lib/dialog');
+var RaisedButton = require('material-ui/lib/raised-button');
+var FlatButton = require('material-ui/lib/flat-button');
+
 var actions = require('../actions');
-    
+
+var ObjectElement = require('../components/ObjectElement.jsx');
+
 var mapStateToProps = function(state) {
     return {
         conferences: state.conferences,
@@ -17,6 +24,9 @@ var mapStateToProps = function(state) {
 
 var mapDispatchToProps = function(dispatch) {
   return {
+      saveConference: function(conferenceId, conference) { 
+          dispatch(actions.saveConference(conferenceId, conference));
+      },
       selectConference: function(conferenceId) {
           dispatch(actions.selectConference(conferenceId));
       },
@@ -31,6 +41,29 @@ var mapDispatchToProps = function(dispatch) {
 
 var Home = React.createClass({
 
+    conferenceUpdated: function(data)
+    {
+        this.data = data;    
+    },
+    
+    hideConferenceDialog: function() {
+        this.setState({
+            showConferenceDialog: false
+        })  
+    },
+    
+    showConferenceDialog: function() {
+        this.setState({
+            showConferenceDialog: true
+        })  
+    },
+    
+    getInitialState: function() {
+        return {
+            showConferenceDialog: false
+        };
+    },
+    
     render: function() {
 
         var markers = this.props.conferences ? this.props.conferences.map(function(conference) {
@@ -46,17 +79,25 @@ var Home = React.createClass({
         
         var center =  {lat:51.4826, lng: 0.0077};
         var zoom =  9;
+        var actions = [<FlatButton secondary={true} label="Forget" onClick={this.hideConferenceDialog} />,<FlatButton primary={true} label="Create" onClick={this.props.saveConference} />];
+                            
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>
                         <h1>Confinder</h1>
                         <h3>Find out what's going on near you.</h3>
                     </center>
                     {!this.props.isLoggedIn ?
-                    <button onClick={this.props.beginLogin}>
+                    <RaisedButton onClick={this.props.beginLogin}>
                         Login
-                    </button> :
+                    </RaisedButton> :
                     <div>
-                        Hi {this.props.profile.nickname}!
+                        <div>
+                            Hi {this.props.profile.nickname}!
+                        </div>
+                        {window.env.enable_conference_submission ?
+                        <RaisedButton onClick={this.showConferenceDialog}>
+                            List my conference
+                        </RaisedButton>: null}
                     </div> }
                     <div style={{width: '100%', height: '20em'}} > 
                         <GoogleMap
@@ -66,6 +107,41 @@ var Home = React.createClass({
                             {markers}
                         </GoogleMap>
                     </div>
+                    {this.state.showConferenceDialog ?
+                    <Dialog
+                        modal={true}
+                        open={true}
+                        title="Add a new conference" 
+                        actions={actions}>
+                        <ObjectElement data={{}} schema={{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://confinder.uatec.net/v1",
+  "type": "object",
+  "properties": {
+    "name": {
+        "id": "https://confinder.uatec.net/v1/name",
+        "type": "string",
+        "title": "Name"
+    },
+    "address": {
+      "id": "https://confinder.uatec.net/v1/address",
+      "type": "string",
+      "title": "Address"
+    },
+    "homepage": {
+      "id": "https://confinder.uatec.net/v1/homepage",
+      "type": "string",
+      "title": "Homepage"
+    }
+  },
+  "required": [
+    "name",
+    "address",
+    "homepage",
+    "homepage"
+  ]
+}} onChange={this.props.conferenceUpdated} expanded={true} />
+                    </Dialog> : null}
                     
                     {this.props.selectedConferenceId ? 
                     <div>

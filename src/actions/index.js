@@ -15,6 +15,11 @@ var prefix = require('superagent-prefix')(urlPrefix);
 
 module.exports = {
     
+    SAVE_CONFERENCE: 'SAVE_CONFERENCE',
+    saveConference: function(conferenceId, conference) {
+          
+    },
+    
     BEGIN_LOGIN: 'BEGIN_LOGIN',
     beginLogin: function() {
         lock.show();
