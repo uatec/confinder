@@ -19,6 +19,12 @@ module.exports = React.createClass({
        expanded: React.PropTypes.bool,
     },
 
+    getDefaultProps: function() {
+        return {
+            onChange: function(){}
+        };
+    },
+
     _onChange: function(e) {
         var newValue = e.target.value; 
         this.props.onChange(newValue);

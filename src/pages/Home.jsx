@@ -79,7 +79,10 @@ var Home = React.createClass({
         
         var center =  {lat:51.4826, lng: 0.0077};
         var zoom =  9;
-        var actions = [<FlatButton secondary={true} label="Forget" onClick={this.hideConferenceDialog} />,<FlatButton primary={true} label="Create" onClick={this.props.saveConference} />];
+        var actions = [<FlatButton secondary={true} label="Forget" onClick={this.hideConferenceDialog} />,
+        <FlatButton primary={true} 
+            label="Create"
+            onClick={function(e) {this.props.saveConference(null, this.data);}.bind(this)} />];
                             
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>

@@ -15,10 +15,57 @@ var prefix = require('superagent-prefix')(urlPrefix);
 
 module.exports = {
     
+    SAVING_CONFERENCE: 'SAVING_CONFERENCE',
+    savingConference: function() {
+        return {
+            type: this.SAVING_CONFERENCE
+        };
+    },
+    
+    CONFERENCE_SAVED: 'CONFERENCE_SAVED',
+    conferenceSaved: function(savedConferenceId, newConferencesList) {
+        return {
+            type: this.CONFERENCE_SAVED,
+            savedConferenceId: savedConferenceId,
+            newConferencesList: newConferencesList
+        };
+    },
+    
     SAVE_CONFERENCE: 'SAVE_CONFERENCE',
     saveConference: function(conferenceId, conference) {
-          
+        return function(dispatch) {
+            dispatch(this.savingConference());
+            if ( conferenceId !== null ) {
+                // put to the existing conference id
+                request
+                    .put('/conference/' + conferenceId)
+                    .send(conference)
+// TODO: enable security
+//                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
+                    .end(function(err, res) {
+                       if ( err ) {
+                           throw new Error(err);
+                       }
+                       dispatch(this.conferenceSaved(conferenceId, res.body));
+                    });
+            } else {
+                // post the new conference
+                request
+                    .put('/conference')
+                    .send(conference)
+// TODO: enable security
+//                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
+                    .end(function(err, res) {
+                       if ( err ) {
+                           throw new Error(err);
+                       }
+                       dispatch(this.conferenceSaved(conferenceId, res.body));
+                    });
+                
+            }
+        }.bind(this);
     },
+    
     
     BEGIN_LOGIN: 'BEGIN_LOGIN',
     beginLogin: function() {
