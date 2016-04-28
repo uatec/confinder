@@ -89,7 +89,6 @@ var Home = React.createClass({
                 process.env.enable_conference_submission ||
                 window.env.enable_conference_submission;
             
-                     console.log('process: ', enable_conference_submission);
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>
                         <h1>Confinder</h1>

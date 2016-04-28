@@ -39,6 +39,7 @@ module.exports = {
                 // put to the existing conference id
                 request
                     .put('/conferences/' + conferenceId)
+                    .use(prefix)
                     .send(conference)
 // TODO: enable security
 //                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
@@ -47,11 +48,12 @@ module.exports = {
                            throw new Error(err);
                        }
                        dispatch(this.conferenceSaved(conferenceId, res.body));
-                    });
+                    }.bind(this));
             } else {
                 // post the new conference
                 request
-                    .put('/conferences')
+                    .post('/conferences')
+                    .use(prefix)
                     .send(conference)
 // TODO: enable security
 //                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
@@ -60,7 +62,7 @@ module.exports = {
                            throw new Error(err);
                        }
                        dispatch(this.conferenceSaved(conferenceId, res.body));
-                    });
+                    }.bind(this));
                 
             }
         }.bind(this);

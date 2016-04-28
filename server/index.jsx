@@ -25,35 +25,9 @@ app.get('/', function(request, response) {
   response.send('<html><head>' + envVars + '</head><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
 });
 
-var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', function(err) {
-  console.log('Data connection established');
-  if ( err ) {
-    console.error(err);
-  }
-});
 
-var Conference = require('../src/datamodels/conference.js');
-app.route('/api/v1/conferences');
 
-var apiV1ConferencesRouter = new express.Router();
-apiV1ConferencesRouter
-  .get('/', function(req, res, next) { 
-    var query = Conference.find();
-
-    query.exec(function (err, conference) {
-      if (err) {
-        console.error('error loading api', err);
-        throw err;
-      }
-      
-      res.json(conference);
-      next();
-    });
-  });
-//  apiV1ConferencesRouter
-//   .post('/;
-
+var apiV1ConferencesRouter = require('./conferences.js');
 app.use('/api/v1/conferences', apiV1ConferencesRouter);
 
 // Static assets
