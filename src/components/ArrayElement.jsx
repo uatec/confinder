@@ -1,14 +1,13 @@
 var React = require('react');
 
 var mui = require('material-ui'),
-     RaisedButton = mui.RaisedButton,
-     FloatingActionButton = mui.FloatingActionButton,
-     Card = mui.Card,
-     CardTitle = mui.CardTitle,
-     CardText = mui.CardText;
-     
-var ContentAdd = require('material-ui/lib/svg-icons/content/add');
-var ContentRemove = require('material-ui/lib/svg-icons/content/remove');
+    RaisedButton = mui.RaisedButton,
+    FloatingActionButton = mui.FloatingActionButton,
+    Card = mui.Card,
+    CardTitle = mui.CardTitle,
+    CardText = mui.CardText,
+    ContentAdd = mui.SvgIcon.ContentAdd,
+    ContentRemove = mui.SvgIcon.ContentRemove;
 
 var componentMappings = require('./ComponentMapping.js');
 

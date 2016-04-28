@@ -4,10 +4,11 @@ var GoogleMap = require('google-map-react'),
     connect = require('react-redux').connect,
     _ = require('lodash');
 
-var TextField = require('material-ui/lib/text-field');
-var Dialog = require('material-ui/lib/dialog');
-var RaisedButton = require('material-ui/lib/raised-button');
-var FlatButton = require('material-ui/lib/flat-button');
+var mui = require('material-ui'),
+    TextField = mui.TextField,
+    Dialog = mui.Dialog,
+    RaisedButton = mui.RaisedButton,
+    FlatButton = mui.FlatButton;
 
 var actions = require('../actions');
 
