@@ -34,20 +34,27 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/test', function
 });
 
 var Conference = require('../src/datamodels/conference.js');
+app.route('/api/v1/conferences');
 
-app.get('/api/v1/conferences', function(req, res, next) { 
-  var query = Conference.find();
+var apiV1ConferencesRouter = new express.Router();
+apiV1ConferencesRouter
+  .get('/', function(req, res, next) { 
+    var query = Conference.find();
 
-  query.exec(function (err, conference) {
-    if (err) {
-      console.error('error loading api', err);
-      throw err;
-    }
-    
-    res.json(conference);
-    next();
+    query.exec(function (err, conference) {
+      if (err) {
+        console.error('error loading api', err);
+        throw err;
+      }
+      
+      res.json(conference);
+      next();
+    });
   });
-});
+//  apiV1ConferencesRouter
+//   .post('/;
+
+app.use('/api/v1/conferences', apiV1ConferencesRouter);
 
 // Static assets
 app.use(express.static(path.resolve(__dirname, '../dist')));

@@ -38,7 +38,7 @@ module.exports = {
             if ( conferenceId !== null ) {
                 // put to the existing conference id
                 request
-                    .put('/conference/' + conferenceId)
+                    .put('/conferences/' + conferenceId)
                     .send(conference)
 // TODO: enable security
 //                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
@@ -51,7 +51,7 @@ module.exports = {
             } else {
                 // post the new conference
                 request
-                    .put('/conference')
+                    .put('/conferences')
                     .send(conference)
 // TODO: enable security
 //                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
