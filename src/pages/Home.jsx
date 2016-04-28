@@ -84,7 +84,12 @@ var Home = React.createClass({
         <FlatButton primary={true} 
             label="Create"
             onClick={function(e) {this.props.saveConference(null, this.data);}.bind(this)} />];
-                            
+
+            var enable_conference_submission =
+                process.env.enable_conference_submission ||
+                window.env.enable_conference_submission;
+            
+                     console.log('process: ', enable_conference_submission);
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>
                         <h1>Confinder</h1>
@@ -98,7 +103,7 @@ var Home = React.createClass({
                         <div>
                             Hi {this.props.profile.nickname}!
                         </div>
-                        {window.env.enable_conference_submission ?
+                        {enable_conference_submission ?
                         <RaisedButton onClick={this.showConferenceDialog}>
                             List my conference
                         </RaisedButton>: null}
@@ -111,10 +116,10 @@ var Home = React.createClass({
                             {markers}
                         </GoogleMap>
                     </div>
-                    {this.state.showConferenceDialog ?
+                    {enable_conference_submission ?
                     <Dialog
                         modal={true}
-                        open={true}
+                        open={this.state.showConferenceDialog}
                         title="Add a new conference" 
                         actions={actions}>
                         <ObjectElement data={{}} schema={{
