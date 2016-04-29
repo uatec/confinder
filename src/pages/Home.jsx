@@ -12,7 +12,33 @@ var mui = require('material-ui'),
 
 var actions = require('../actions');
 
-var ObjectElement = require('../components/ObjectElement.jsx');
+var muiAutocomplete = mui.AutoComplete;
+ var AutoComplete = React.createClass({
+
+     getInitialState: function() {
+         return { 
+             data: []
+         };
+     },
+
+
+  handleUpdateInput: function(t) {
+    this.setState({
+      dataSource: [t, t + t, t + t + t],
+    });
+  },
+
+  render: function() {
+    return (
+      <AutoComplete
+        hintText="Type c"
+        dataSource={this.state.dataSource}
+        onUpdateInput={this.handleUpdateInput}
+      />
+    );
+  }
+});
+
 
 var mapStateToProps = function(state) {
     return {
@@ -42,9 +68,17 @@ var mapDispatchToProps = function(dispatch) {
 
 var Home = React.createClass({
 
-    conferenceUpdated: function(data)
-    {
-        this.data = data;    
+    saveConference: function() {
+        
+      var conference = {
+          name: this.refs.name.getValue(),
+          url: this.refs.homepage.getValue(),
+          address: this.refs.address.getValue()
+      };
+        
+        
+      this.props.saveConference(null, conference);
+      this.hideConferenceDialog();  
     },
     
     hideConferenceDialog: function() {
@@ -83,7 +117,7 @@ var Home = React.createClass({
         var actions = [<FlatButton secondary={true} label="Forget" onClick={this.hideConferenceDialog} />,
         <FlatButton primary={true} 
             label="Create"
-            onClick={function(e) {this.props.saveConference(null, this.data);}.bind(this)} />];
+            onClick={this.saveConference} />];
 
             var enable_conference_submission =
                 process.env.enable_conference_submission ||
@@ -121,34 +155,14 @@ var Home = React.createClass({
                         open={this.state.showConferenceDialog}
                         title="Add a new conference" 
                         actions={actions}>
-                        <ObjectElement data={{}} schema={{
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://confinder.uatec.net/v1",
-  "type": "object",
-  "properties": {
-    "name": {
-        "id": "https://confinder.uatec.net/v1/name",
-        "type": "string",
-        "title": "Name"
-    },
-    "address": {
-      "id": "https://confinder.uatec.net/v1/address",
-      "type": "string",
-      "title": "Address"
-    },
-    "url": {
-      "id": "https://confinder.uatec.net/v1/homepage",
-      "type": "string",
-      "title": "Homepage"
-    }
-  },
-  "required": [
-    "name",
-    "address",
-    "homepage",
-    "homepage"
-  ]
-}} onChange={this.conferenceUpdated} expanded={true} />
+                        
+                        
+                        <TextField ref="name" floatingLabelText="Name" />
+                        <br />
+                        <TextField ref="homepage" floatingLabelText="Home page" />
+                        <br />
+                        <TextField ref="address" floatingLabelText="Address" />
+                        <br />
                     </Dialog> : null}
                     
                     {this.props.selectedConferenceId ? 

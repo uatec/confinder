@@ -1,6 +1,10 @@
 module.exports = function(state, action) {
     state = state || {};
     switch ( action.type ) {
+        case 'CONFERENCE_SAVED': 
+            return Object.assign({}, state, {
+               editedConferenced: -1 
+            });
         case 'LOGIN_SUCCEEDED': 
             return Object.assign({}, state, {
                 profile: action.profile
