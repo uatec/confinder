@@ -107,7 +107,7 @@ var Home = React.createClass({
                             List my conference
                         </RaisedButton>: null}
                     </div> }
-                    <div style={{width: '100%', height: '20em'}} > 
+                    <div style={{width: '100%', height: '20em', overflow: 'hidden'}} > 
                         <GoogleMap
                             onChildClick={this.props.selectConference}
                             defaultCenter={center}
