@@ -136,7 +136,7 @@ var Home = React.createClass({
       "type": "string",
       "title": "Address"
     },
-    "homepage": {
+    "url": {
       "id": "https://confinder.uatec.net/v1/homepage",
       "type": "string",
       "title": "Homepage"
@@ -148,7 +148,7 @@ var Home = React.createClass({
     "homepage",
     "homepage"
   ]
-}} onChange={this.props.conferenceUpdated} expanded={true} />
+}} onChange={this.conferenceUpdated} expanded={true} />
                     </Dialog> : null}
                     
                     {this.props.selectedConferenceId ? 

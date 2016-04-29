@@ -5,6 +5,7 @@ var ConferenceSchema   = new Schema({
     id: String,
     url: String,
     name: String,
+    address: String,
     location: {
         type: {
             lat: String,

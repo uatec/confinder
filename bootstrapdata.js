@@ -15,8 +15,8 @@ var conferenceModel     = new Conference();
 conferenceModel.id = 'dodldn16';
 conferenceModel.name = 'DevOpsDays London 2016'; 
 conferenceModel.url = 'http://www.devopsdays.org/events/2016-london/';
+conferenceModel.address = '12 Fourteen Street, Tenville, Sixtyshire, ONE1 378';
 conferenceModel.location    = {lat:51.512761, lng:-0.099792}; 
-
 conferenceModel.save(function (err) {
     if ( err ) {
         console.log('error');
