@@ -24,7 +24,10 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(request, response) {
-  var body = ReactDOMServer.renderToString(<App />);
+  var body = '';
+  if ( GLOBAL.env.enable_isomorphic_rendering ) {
+    body = ReactDOMServer.renderToString(<App />);
+  }
   response.send('<html><head>' + envVars + '</head><body><div id="content">' + body + '</div><script src="/bundle.js"></script></body></html>');
 });
 

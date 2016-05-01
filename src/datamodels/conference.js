@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var ConferenceSchema   = new Schema({
     id: String,
+    created_by: String,
     url: String,
     name: String,
     address: String,

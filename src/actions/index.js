@@ -13,6 +13,9 @@ if(isNode())  {
 }
 var prefix = require('superagent-prefix')(urlPrefix);
 
+// TODO: Move this to a permanent store
+var authToken = null;
+
 module.exports = {
     
     SAVING_CONFERENCE: 'SAVING_CONFERENCE',
@@ -38,11 +41,10 @@ module.exports = {
             if ( conferenceId !== null ) {
                 // put to the existing conference id
                 request
-                    .put('/conferences/' + conferenceId)
+                    .put('/conferences/my' + conferenceId)
                     .use(prefix)
+                    .set('Authorization', 'Bearer ' + authToken)
                     .send(conference)
-// TODO: enable security
-//                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
                     .end(function(err, res) {
                        if ( err ) {
                            throw new Error(err);
@@ -52,11 +54,10 @@ module.exports = {
             } else {
                 // post the new conference
                 request
-                    .post('/conferences')
+                    .post('/conferences/my')
                     .use(prefix)
+                    .set('Authorization', 'Bearer ' + authToken)
                     .send(conference)
-// TODO: enable security
-//                    .set('Authorization', 'Bearer: ' + 'blahblahblah')   
                     .end(function(err, res) {
                        if ( err ) {
                            throw new Error(err);
@@ -93,6 +94,7 @@ module.exports = {
             }
             var authHash = lock.parseHash(window.location.hash);
             if ( authHash ) {
+                authToken = authHash.id_token;
                 lock.getProfile(authHash.id_token, function(err, profile) {
                     if ( err ) {
                         throw new Error(err);
