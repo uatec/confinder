@@ -21,18 +21,24 @@ Configuration is done entirely using environment variables, the default value is
 
 ## Roadmap
 
-### Phase 1 - Core Features
-* Visitor Entered Conferences
+### Milestone 1 - Core Features
+* ~~Visitor Entered Conferences~~
 * Manual promotion of conference to public
 * Automation promotion
 
-### Phase 2 - Data Enrichment
-* Geolocation of Conference
+### Milestone 2 - Data Enrichment
+* ~~Geolocation of Conference~~
 * Registration Link
 * Cost Information
+* Date
 * Logo
 
-### Phase 3 - Discovery
+### Milestone 3 - Discovery
 * Geosearching by postcode
 * Location API support
+* Date Searching
 * Tags
+
+### Milestone 4 - Interaction
+* Twitter administration 
+* Automated conference discover
