@@ -112,10 +112,6 @@ var Home = React.createClass({
             label="Create"
             onClick={this.saveConference} />];
 
-            var enable_conference_submission =
-                process.env.enable_conference_submission ||
-                window.env.enable_conference_submission;
-            
         return  <div>
                     <center style={{backgroundColor:'#3F51B5', color: 'white'}}>
                         <h1>Confinder</h1>
@@ -129,7 +125,7 @@ var Home = React.createClass({
                         <div>
                             Hi {this.props.profile.nickname}!
                         </div>
-                        {enable_conference_submission ?
+                        {GLOBAL.env.enable_conference_submission ?
                         <RaisedButton onClick={this.showConferenceDialog}>
                             List my conference
                         </RaisedButton>: null}
@@ -143,7 +139,7 @@ var Home = React.createClass({
                             {markers}
                         </GoogleMap>
                     </div>
-                    {enable_conference_submission ?
+                    {GLOBAL.env.enable_conference_submission ?
                     <Dialog
                         modal={true}
                         open={this.state.showConferenceDialog}

@@ -9,7 +9,7 @@ if(isNode())  {
 
 } else {
     var Auth0Lock = require('auth0-lock');
-    var lock = new Auth0Lock(window.env.auth0clientid, window.env.auth0domain);
+    var lock = new Auth0Lock(GLOBAL.env.auth0clientid, GLOBAL.env.auth0domain);
 }
 var prefix = require('superagent-prefix')(urlPrefix);
 
@@ -88,6 +88,9 @@ module.exports = {
     TRY_LOGIN: 'TRY_LOGIN',
     tryLogin: function() {
         return function(dispatch) {
+            if ( typeof window === 'undefined') {
+                return;  // not gonna happen if we're not in the browser. We only support hashes from auth0 redirects
+            }
             var authHash = lock.parseHash(window.location.hash);
             if ( authHash ) {
                 lock.getProfile(authHash.id_token, function(err, profile) {

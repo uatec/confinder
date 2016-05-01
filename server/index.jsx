@@ -7,11 +7,14 @@ var App = require('./generated/app');
 var path = require('path');
 var _ = require('lodash');
 
-var envVars = '<script>window.env=' + JSON.stringify(_.pick(process.env, [
+var envVars = '<script>GLOBAL = {}; GLOBAL.env=' + JSON.stringify(_.pick(process.env, [
   'auth0clientid', 
   'auth0domain', 
   'enable_conference_submission'
   ])) + '</script>';
+  
+GLOBAL.env = process.env;
+
 
 app.use(function(req, res, next) {
     GLOBAL.navigator = {
