@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var GoogleMap = require('google-map-react'),
     MapMarker = require('../components/MapMarker.jsx'),
     connect = require('react-redux').connect,
@@ -12,33 +13,7 @@ var mui = require('material-ui'),
 
 var actions = require('../actions');
 
-var muiAutocomplete = mui.AutoComplete;
- var AutoComplete = React.createClass({
-
-     getInitialState: function() {
-         return { 
-             data: []
-         };
-     },
-
-
-  handleUpdateInput: function(t) {
-    this.setState({
-      dataSource: [t, t + t, t + t + t],
-    });
-  },
-
-  render: function() {
-    return (
-      <AutoComplete
-        hintText="Type c"
-        dataSource={this.state.dataSource}
-        onUpdateInput={this.handleUpdateInput}
-      />
-    );
-  }
-});
-
+var LocationInput = require('../components/LocationInput.jsx');
 
 var mapStateToProps = function(state) {
     return {
@@ -66,6 +41,8 @@ var mapDispatchToProps = function(dispatch) {
   };  
 };
 
+var pin = require('../images/pin.png');
+
 var Home = React.createClass({
 
     saveConference: function() {
@@ -73,7 +50,8 @@ var Home = React.createClass({
       var conference = {
           name: this.refs.name.getValue(),
           url: this.refs.homepage.getValue(),
-          address: this.refs.address.getValue()
+          address: this.refs.location.getAddress(),
+          location: this.refs.location.getLatLng()
       };
         
         
@@ -144,7 +122,7 @@ var Home = React.createClass({
                     <div style={{width: '100%', height: '20em', overflow: 'hidden'}} > 
                         <GoogleMap
                             onChildClick={this.props.selectConference}
-                            defaultCenter={center}
+                            center={center}
                             defaultZoom={zoom}>
                             {markers}
                         </GoogleMap>
@@ -161,8 +139,7 @@ var Home = React.createClass({
                         <br />
                         <TextField ref="homepage" floatingLabelText="Home page" />
                         <br />
-                        <TextField ref="address" floatingLabelText="Address" />
-                        <br />
+                        <LocationInput ref="location" />
                     </Dialog> : null}
                     
                     {this.props.selectedConferenceId ? 

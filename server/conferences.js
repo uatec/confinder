@@ -38,7 +38,7 @@ apiV1ConferencesRouter
     conferenceModel.name = req.body.name;
     conferenceModel.url = req.body.url;
     conferenceModel.address = req.body.address;
-    conferenceModel.location = {lat:51.512761, lng:-0.099792};
+    conferenceModel.location = req.body.location;
     conferenceModel.save(function() {
       res.sendStatus(200);     
       next();  
