@@ -28,7 +28,7 @@
     "superagent-prefix": "0.0.2",
     "transform-loader": "^0.2.3",
     "url-loader": "^0.5.7",
-    "webpack": "^1.12.11"
+    "webpack": "^1.13.0"
   },
   "scripts": {
     "watch": "./node_modules/.bin/webpack --progress --colors --hot --debug --devtool inline-source-map --watch",
