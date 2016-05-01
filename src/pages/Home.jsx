@@ -37,6 +37,9 @@ var mapDispatchToProps = function(dispatch) {
       },
       beginLogin: function() {
           dispatch(actions.beginLogin());
+      },
+      onMapClick: function() {
+          dispatch(actions.selectConference(null));
       }
   };  
 };
@@ -85,6 +88,18 @@ var Home = React.createClass({
                 lng={conference.location.lng} />;
         }) : [];
         
+        var conferencePanels = this.props.conferences ? this.props.conferences.map(function(conference) {
+            return <div>
+                    <a href={conference.url} target="_blank">
+                        <h3>{conference.name}</h3>
+                    </a>
+                    <div>
+                        {conference.address}
+                    </div>
+                    <hr />
+                </div>
+        }) : [];
+        
         var selectedConference = null;
         if ( this.props.selectedConferenceId ) {
             selectedConference = _.find(this.props.conferences, {id: this.props.selectedConferenceId});
@@ -121,6 +136,7 @@ var Home = React.createClass({
                     </div> }
                     <div style={{width: '100%', height: '20em', overflow: 'hidden'}} > 
                         <GoogleMap
+                            onClick={this.props.onMapClick}
                             onChildClick={this.props.selectConference}
                             center={center}
                             defaultZoom={zoom}>
@@ -149,7 +165,7 @@ var Home = React.createClass({
                                 {selectedConference.name}
                             </h2>
                         </a>
-                    </div> : null}
+                    </div> : conferencePanels }
                 </div>;
     }
 });
